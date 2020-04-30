@@ -62,26 +62,10 @@ def train(model_type=ModelType.FF, batch_size=128, num_epochs=2):
 
                 model.train()
 
+    # compute summary
     l1_mean = [x[0] for x in model.l1_dist]
-    plt.plot(l1_mean, 'r', label='%s layer 1 input mean' % model_type.value)
-    plt.savefig('imgs/%s_l1_mean.png' % model_type.value)
-    plt.close()
-
     l1_std = [x[1] for x in model.l1_dist]
-    plt.plot(l1_std, 'r', label='%s layer 1 input std' % model_type.value)
-    plt.savefig('imgs/%s_l1_std.png' % model_type.value)
-    plt.close()
-
     l2_mean = [x[0] for x in model.l2_dist]
-    plt.plot(l2_mean, 'r', label='%s layer 2 input mean' % model_type.value)
-    plt.savefig('imgs/%s_l2_mean.png' % model_type.value)
-    plt.close()
-
     l2_std = [x[1] for x in model.l2_dist]
-    plt.plot(l2_std, 'r', label='%s layer 2 input std' % model_type.value)
-    plt.savefig('imgs/%s_l2_std.png' % model_type.value)
-    plt.close()
 
-    plt.plot(loss_arr, 'r', label='%s loss' % model_type.value)
-    plt.savefig('imgs/%s_loss.png' % model_type.value)
-    plt.close()
+    return l1_mean, l1_std, l2_mean, l2_std, loss_arr, model_type.value
