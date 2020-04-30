@@ -19,8 +19,8 @@ plt.savefig('imgs/l1_mean.png')
 plt.close()
 
 # plot layer 2
-plt.plot(l2_mean, 'g', label='%s layer 1 input mean' % model_type)
-plt.plot(l2_mean_bn, 'b', label='%s layer 1 input mean' % model_type_bn)
+plt.plot(l2_mean, 'g', label='%s layer 2 input mean' % model_type)
+plt.plot(l2_mean_bn, 'b', label='%s layer 2 input mean' % model_type_bn)
 plt.title('Layer 2 Mean: %s vs. %s' % (model_type, model_type_bn))
 plt.ylabel('Mean Value Before Activation')
 plt.xlabel('Iteration')
