@@ -12,14 +12,16 @@ import torch.nn as nn
 import torch.optim as optim
 
 import seaborn as sns
+from tensorboardX import SummaryWriter
 
 
 class ModelType(str, Enum):
-    FF = 'Model'
-    BN = 'ModelBN'
+    SIMPLE_FF = 'SimpleFF'
+    SIMPLE_FF_BN = 'SimpleFFBN'
+    SIMPLE_FF_BN_NOISE = 'SimpleFFBNNoise'
 
 
-def train(model_type=ModelType.FF, batch_size=128, num_epochs=2):
+def train(model_type=ModelType.SIMPLE_FF, batch_size=128, num_epochs=2):
     trainset = torchvision.datasets.MNIST(
         root='./data',
         train=True,
@@ -39,10 +41,16 @@ def train(model_type=ModelType.FF, batch_size=128, num_epochs=2):
     opt = optim.SGD(model.parameters(), lr=0.01)
 
     loss_arr = []
+    l1_weights = []
+    l2_weights = []
+
+    writer = SummaryWriter(log_dir='runs/' + model_type.value)
 
     for epoch in range(num_epochs):
 
         for i, data in enumerate(trainloader, 0):
+
+            n_iter = (epoch * len(trainloader)) + i
 
             inputs, labels = data
 
@@ -53,6 +61,10 @@ def train(model_type=ModelType.FF, batch_size=128, num_epochs=2):
             opt.step()
 
             loss_arr.append(loss.item())
+
+            writer.add_scalar('loss', loss.item(), n_iter)
+            writer.add_scalar('inputs/layer1/mean', model.l1_inp.mean(), n_iter)
+            writer.add_scalar('inputs/layer2/mean', model.l2_inp.mean(), n_iter)
 
             if i % 10 == 0:
                 inputs = inputs.view(inputs.size(0), -1)

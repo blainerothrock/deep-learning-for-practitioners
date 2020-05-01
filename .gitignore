@@ -2,6 +2,7 @@
 .idea/
 .DS_Store
 batch-norm/bn/data
+batch-norm/bn/runs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

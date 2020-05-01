@@ -1,2 +1,3 @@
-from .model import Model
-from .model_bn import ModelBN
+from .SimpleFF import SimpleFF
+from .SimpleFFBN import SimpleFFBN
+from .SimpleFFBNNoise import SimpleFFBNNoise
