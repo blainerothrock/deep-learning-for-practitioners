@@ -118,7 +118,20 @@ Some supplementary materials:
  - Fun thing! [Play around with GauGAN](https://www.nvidia.com/en-us/research/ai-playground/) (scroll down a bit), which uses feature-wise conditioning, to get a better feel for the power of conditioning :sparkles:
     - Concise description of GauGAN implementation [here](https://nvlabs.github.io/SPADE/)
     
-### Week 5
+
+### Week five
+ 
+ #### StyleGAN and StyleGAN2 (David, Joshua, and Thomas)
+ StyleGAN:
+ - [Paper](https://arxiv.org/pdf/1406.2661.pdf)
+ - [Codebase](https://github.com/NVlabs/stylegan)
+ - [Supplemental video](https://youtu.be/kSLJriaOumA)
+ 
+ StyleGAN2:
+ - [Paper](https://arxiv.org/pdf/1912.04958.pdf)
+ - [Codebase](https://github.com/NVlabs/stylegan2)
+ - [Supplemental video](https://youtu.be/c-NJtV9Jvp0)
+ - [15 minutes of face interpolations w/ StyleGAN2](https://www.youtube.com/watch?v=6E1_dgYlifc)
 
 #### Batch Normalization
 * Original Paper: [Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](https://arxiv.org/pdf/1502.03167.pdf)
@@ -129,6 +142,5 @@ Some supplementary materials:
 * Presenting Paper: [How Batch Normalization Works](https://arxiv.org/pdf/1805.11604.pdf)
   * [Overview Video](https://youtu.be/ZOabsYbmBRM)
 * [PyTorch source code for Batch Norm](https://pytorch.org/docs/stable/_modules/torch/nn/modules/batchnorm.html#BatchNorm2d)
-
 
 
