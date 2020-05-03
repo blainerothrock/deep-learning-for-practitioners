@@ -117,6 +117,18 @@ Some supplementary materials:
    - I'd highly recommend this resource, especially if some parts of the presentation were unclear!
  - Fun thing! [Play around with GauGAN](https://www.nvidia.com/en-us/research/ai-playground/) (scroll down a bit), which uses feature-wise conditioning, to get a better feel for the power of conditioning :sparkles:
     - Concise description of GauGAN implementation [here](https://nvlabs.github.io/SPADE/)
+    
+### Week 5
+
+#### Batch Normalization
+* Original Paper: [Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](https://arxiv.org/pdf/1502.03167.pdf)
+* Andrew Ng Videos
+  * [Normalizing Activations in a Networks](https://www.youtube.com/watch?v=tNIpEZLv_eg)
+  * [Why does batch normalization work?](https://www.youtube.com/watch?v=nUUqwaxLnWs)
+  * [Batch norm at test time](https://www.youtube.com/watch?v=5qefnAek8OA)
+* Presenting Paper: [How Batch Normalization Works](https://arxiv.org/pdf/1805.11604.pdf)
+  * [Overview Video](https://youtu.be/ZOabsYbmBRM)
+* [PyTorch source code for Batch Norm](https://pytorch.org/docs/stable/_modules/torch/nn/modules/batchnorm.html#BatchNorm2d)
 
 
 
