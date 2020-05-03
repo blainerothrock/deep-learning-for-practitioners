@@ -30,7 +30,8 @@ class SimpleFFBNNoise(nn.Module):
         std1 = x.std().item() * np.random.uniform(1, 2)
         noise1 = torch.tensor(np.random.normal(loc=mean1, scale=std1, size=x.shape))
 
-        x += noise1
+        with torch.no_grad():
+            x += noise1.detach()
 
         x1 = x.detach().mean()
         self.l1_dist.append((x1.mean(), x1.std()))
@@ -44,7 +45,8 @@ class SimpleFFBNNoise(nn.Module):
         std2 = x.std().item() * np.random.uniform(1, 2)
         noise2 = torch.tensor(np.random.normal(loc=mean2, scale=std2, size=x.shape))
 
-        x += noise2
+        with torch.no_grad():
+            x += noise2.detach()
 
         x2 = x.detach().numpy()
         self.l2_dist.append((x2.mean(), x2.std()))

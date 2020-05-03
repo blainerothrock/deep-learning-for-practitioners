@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 
 from bn.train import train, ModelType
 
-l1_mean, l1_std, l2_mean, l2_std, loss_arr, model_type = train(model_type=ModelType.SIMPLE_FF, num_epochs=10)
-l1_mean_bn, l1_std_bn, l2_mean_bn, l2_std_bn, loss_arr_bn, model_type_bn = train(model_type=ModelType.SIMPLE_FF_BN, num_epochs=10)
+# l1_mean, l1_std, l2_mean, l2_std, loss_arr, model_type = train(model_type=ModelType.SIMPLE_FF, num_epochs=10)
+# l1_mean_bn, l1_std_bn, l2_mean_bn, l2_std_bn, loss_arr_bn, model_type_bn = train(model_type=ModelType.SIMPLE_FF_BN, num_epochs=10)
 _, _, _, _, _, _ = train(model_type=ModelType.SIMPLE_FF_BN_NOISE, num_epochs=10)
 
 """
