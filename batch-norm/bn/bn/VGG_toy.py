@@ -7,9 +7,11 @@ import numpy as np
 # simplified the VGG11 network greatly to reduce training for the toy example
 class VGGToy(nn.Module):
 
-    def __init__(self, num_classes=10, init_weights=True, batch_norm=False, noise_injection=False):
+    def __init__(self, device, num_classes=10, init_weights=True, batch_norm=False, noise_injection=False):
         super(VGGToy, self).__init__()
 
+
+        self.device = device
         self.num_conv_layers = 3
         self.batch_norm = batch_norm
         self.noise_injection = noise_injection
@@ -42,7 +44,7 @@ class VGGToy(nn.Module):
     def _add_noise(self, x):
         mean1 = x.mean().item()
         std1 = x.std().item() * np.random.uniform(1, 2)
-        noise1 = torch.tensor(np.random.normal(loc=mean1, scale=std1, size=x.shape))
+        noise1 = torch.tensor(np.random.normal(loc=mean1, scale=std1, size=x.shape)).to(self.device)
         with torch.no_grad():
             x += noise1.detach()
 

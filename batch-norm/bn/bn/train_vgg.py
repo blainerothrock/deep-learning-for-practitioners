@@ -54,19 +54,25 @@ def train_vgg(model_type=ModelType.VGG_Toy, batch_size=4, batch_norm=False, nois
 
     classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    print('training on %s' % device)
+
     module = importlib.import_module("bn")
     class_ = getattr(module, model_type.value)
-    model = class_(num_classes=10, init_weights=True, batch_norm=batch_norm, noise_injection=noise)
+    model = class_(device=device, num_classes=10, init_weights=True, batch_norm=batch_norm, noise_injection=noise)
 
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
-    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-    print('training on %s' % device)
-
     model.to(device)
 
-    writer = SummaryWriter(log_dir='runs/%s_%s' % (model_type.value, datetime.now().strftime("%H:%M:%S")))
+    model_id = ''
+    if batch_norm:
+        model_id += 'batch_norm'
+    if noise:
+        model_id += 'noise'
+
+    writer = SummaryWriter(log_dir='runs/%s_%s_%s' % (model_type.value, model_id, datetime.now().strftime("%H:%M:%S")))
 
     for epoch in range(num_epochs):
         model.train()
