@@ -5,10 +5,10 @@ import numpy as np
 #  TODO:
 # copied and altered to expose weights from the pytorch source code, modeled from vgg11
 # simplified the VGG11 network greatly to reduce training for the toy example
-class VGG11(nn.Module):
+class VGGToy(nn.Module):
 
     def __init__(self, num_classes=10, init_weights=True, batch_norm=False, noise_injection=False):
-        super(VGG11, self).__init__()
+        super(VGGToy, self).__init__()
 
         self.batch_norm = batch_norm
         self.noise_injection = noise_injection
@@ -24,25 +24,15 @@ class VGG11(nn.Module):
         self.bn2 = nn.BatchNorm2d(128)
         self.conv3 = nn.Conv2d(128, 256, kernel_size=3, padding=1)
         self.bn3 = nn.BatchNorm2d(256)
-        self.conv4 = nn.Conv2d(256, 256, kernel_size=3, padding=1)
-        self.bn4 = nn.BatchNorm2d(256)
-        self.conv5 = nn.Conv2d(256, 512, kernel_size=3, padding=1)
-        self.bn5 = nn.BatchNorm2d(512)
-        self.conv6 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
-        self.bn6 = nn.BatchNorm2d(512)
-        self.conv7 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
-        self.bn7 = nn.BatchNorm2d(512)
-        self.conv8 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
-        self.bn8 = nn.BatchNorm2d(512)
 
         self.classifier = nn.Sequential(
-            nn.Linear(512 * 7 * 7, 4096),
+            nn.Linear(256 * 7 * 7, 1024),
             nn.ReLU(True),
             nn.Dropout(),
-            nn.Linear(4096, 4096),
+            nn.Linear(1024, 1024),
             nn.ReLU(True),
             nn.Dropout(),
-            nn.Linear(4096, num_classes),
+            nn.Linear(1024, num_classes),
         )
 
         if init_weights:
@@ -84,49 +74,6 @@ class VGG11(nn.Module):
             x = self._add_noise(x)
         self.layer_inputs.append(x.detach())
         x = self.activation(x)
-
-        x = self.conv4(x)
-        if self.batch_norm:
-            x = self.bn4(x)
-        if self.noise_injection:
-            x = self._add_noise(x)
-        self.layer_inputs.append(x.detach())
-        x = self.activation(x)
-        x = self.pool(x)
-
-        x = self.conv5(x)
-        if self.batch_norm:
-            x = self.bn5(x)
-        if self.noise_injection:
-            x = self._add_noise(x)
-        self.layer_inputs.append(x.detach())
-        x = self.activation(x)
-
-        x = self.conv6(x)
-        if self.batch_norm:
-            x = self.bn6(x)
-        if self.noise_injection:
-            x = self._add_noise(x)
-        self.layer_inputs.append(x.detach())
-        x = self.activation(x)
-        x = self.pool(x)
-
-        x = self.conv7(x)
-        if self.batch_norm:
-            x = self.bn7(x)
-        if self.noise_injection:
-            x = self._add_noise(x)
-        self.layer_inputs.append(x.detach())
-        x = self.activation(x)
-
-        x = self.conv8(x)
-        if self.batch_norm:
-            x = self.bn8(x)
-        if self.noise_injection:
-            x = self._add_noise(x)
-        self.layer_inputs.append(x.detach())
-        x = self.activation(x)
-        x = self.pool(x)
 
         x = self.avgpool(x)
         x = torch.flatten(x, 1)

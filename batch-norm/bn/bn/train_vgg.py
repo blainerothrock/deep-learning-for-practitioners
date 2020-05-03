@@ -2,7 +2,7 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 
-from bn.VGG11 import VGG11
+from bn import VGGToy
 
 
 def train_vgg(batch_size=4, batch_norm=False, noise=False, learning_rate=0.01, num_epochs=2):
@@ -21,10 +21,16 @@ def train_vgg(batch_size=4, batch_norm=False, noise=False, learning_rate=0.01, n
 
     classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
-    model = VGG11(num_classes=10, init_weights=True, batch_norm=batch_norm, noise_injection=noise)
+    model = VGGToy(num_classes=10, init_weights=True, batch_norm=batch_norm, noise_injection=noise)
 
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
+
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    print('training on %s' % device)
+
+    model.to(device)
+    model.train()
 
     for epoch in range(num_epochs):
         running_loss = 0.0
@@ -33,6 +39,9 @@ def train_vgg(batch_size=4, batch_norm=False, noise=False, learning_rate=0.01, n
 
         for i, data in enumerate(trainloader, 0):
             inputs, labels = data
+
+            inputs = inputs.to(device)
+            labels = labels.to(device)
 
             # print(inputs.shape)
 
@@ -45,5 +54,5 @@ def train_vgg(batch_size=4, batch_norm=False, noise=False, learning_rate=0.01, n
 
             running_loss += loss.item()
             if i % 2000 == 1999:
-                print('[%d, %5d] loss: %.3d' % (epoch + 1, i + 1, running_loss / 2000))
+                print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 2000))
                 running_loss = 0.0

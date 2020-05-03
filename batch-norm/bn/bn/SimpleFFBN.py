@@ -3,8 +3,10 @@ import numpy as np
 
 
 class SimpleFFBN(nn.Module):
-    def __init__(self):
+    def __init__(self, device):
         super(SimpleFFBN, self).__init__()
+
+        self.device = device
 
         self.l1_dist = []
         self.l2_dist = []
@@ -25,7 +27,7 @@ class SimpleFFBN(nn.Module):
         x = self.l1(x)
         x = self.bn1(x)
 
-        x1 = x.detach().mean()
+        x1 = x.detach()
         self.l1_dist.append((x1.mean(), x1.std()))
         self.l1_inp = x1
 
@@ -33,7 +35,7 @@ class SimpleFFBN(nn.Module):
         x = self.l2(x)
         x = self.bn2(x)
 
-        x2 = x.detach().numpy()
+        x2 = x.detach()
         self.l2_dist.append((x2.mean(), x2.std()))
         self.l2_inp = x2
 
