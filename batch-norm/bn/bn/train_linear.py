@@ -7,19 +7,18 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.tensorboard import SummaryWriter
-import torch.nn.functional as F
 
 import torch.nn as nn
 import torch.optim as optim
 
 
 class ModelType(str, Enum):
-    SIMPLE_FF = 'SimpleFF'
-    SIMPLE_FF_BN = 'SimpleFFBN'
-    SIMPLE_FF_BN_NOISE = 'SimpleFFBNNoise'
+    LINEAR = 'Linear'
+    LINEAR_BN = 'LinearBN'
+    LINEAR_BN_NOISE = 'LinearBNNoise'
 
 
-def train(model_type=ModelType.SIMPLE_FF, batch_size=128, num_epochs=2):
+def train(model_type=ModelType.LINEAR, batch_size=128, num_epochs=2, learning_rate=0.1):
     trainset = torchvision.datasets.MNIST(
         root='./data',
         train=True,
@@ -46,11 +45,9 @@ def train(model_type=ModelType.SIMPLE_FF, batch_size=128, num_epochs=2):
     model.to(device)
 
     loss_fn = nn.CrossEntropyLoss()
-    opt = optim.SGD(model.parameters(), lr=0.01)
+    opt = optim.SGD(model.parameters(), lr=learning_rate)
 
     loss_arr = []
-    l1_weights = []
-    l2_weights = []
 
     writer = SummaryWriter(log_dir='runs/%s_%s' % (model_type.value, datetime.now().strftime("%H:%M:%S")))
 

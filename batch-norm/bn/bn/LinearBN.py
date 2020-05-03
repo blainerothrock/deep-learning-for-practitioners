@@ -1,11 +1,10 @@
-import torch
 import torch.nn as nn
 import numpy as np
 
 
-class SimpleFFBNNoise(nn.Module):
+class LinearBN(nn.Module):
     def __init__(self, device):
-        super(SimpleFFBNNoise, self).__init__()
+        super(LinearBN, self).__init__()
 
         self.device = device
 
@@ -28,13 +27,6 @@ class SimpleFFBNNoise(nn.Module):
         x = self.l1(x)
         x = self.bn1(x)
 
-        mean1 = x.mean().item()
-        std1 = x.std().item() * np.random.uniform(1, 2)
-        noise1 = torch.tensor(np.random.normal(loc=mean1, scale=std1, size=x.shape)).to(self.device)
-
-        with torch.no_grad():
-            x += noise1.detach()
-
         x1 = x.detach()
         self.l1_dist.append((x1.mean(), x1.std()))
         self.l1_inp = x1
@@ -42,13 +34,6 @@ class SimpleFFBNNoise(nn.Module):
         x = self.r1(x)
         x = self.l2(x)
         x = self.bn2(x)
-
-        mean2 = x.mean().item()
-        std2 = x.std().item() * np.random.uniform(1, 2)
-        noise2 = torch.tensor(np.random.normal(loc=mean2, scale=std2, size=x.shape)).to(self.device)
-
-        with torch.no_grad():
-            x += noise2.detach()
 
         x2 = x.detach()
         self.l2_dist.append((x2.mean(), x2.std()))

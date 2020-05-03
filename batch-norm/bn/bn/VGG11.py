@@ -10,6 +10,7 @@ class VGG11(nn.Module):
     def __init__(self, num_classes=10, init_weights=True, batch_norm=False, noise_injection=False):
         super(VGG11, self).__init__()
 
+        self.num_conv_layers = 8
         self.batch_norm = batch_norm
         self.noise_injection = noise_injection
 
