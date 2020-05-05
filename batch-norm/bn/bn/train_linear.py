@@ -18,7 +18,7 @@ class ModelType(str, Enum):
     LINEAR_BN_NOISE = 'LinearBNNoise'
 
 
-def train(model_type=ModelType.LINEAR, batch_size=128, num_epochs=2, learning_rate=1.0):
+def train(model_type=ModelType.LINEAR, batch_size=128, num_epochs=1, learning_rate=2.0):
     trainset = torchvision.datasets.MNIST(
         root='./data',
         train=True,
